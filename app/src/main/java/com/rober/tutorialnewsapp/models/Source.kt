@@ -1,6 +1,5 @@
 package com.rober.tutorialnewsapp
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Source(

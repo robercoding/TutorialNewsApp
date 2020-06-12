@@ -1,8 +1,5 @@
 package com.rober.tutorialnewsapp
 
-
-import com.google.gson.annotations.SerializedName
-
 data class NewsResponse(
     val articles: List<Article>,
     val status: String,
