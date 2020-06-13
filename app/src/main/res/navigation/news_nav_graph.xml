@@ -4,7 +4,7 @@
     app:startDestination="@id/breakingNewsFragment">
     <fragment
         android:id="@+id/breakingNewsFragment"
-        android:name="com.rober.tutorialnewsapp.fragments.BreakingNewsFragment"
+        android:name="com.rober.tutorialnewsapp.ui.fragments.BreakingNewsFragment"
         android:label="BreakingNewsFragment" >
         <action
             android:id="@+id/action_breakingNewsFragment_to_articleFragment"
@@ -17,11 +17,11 @@
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
-        android:name="com.rober.tutorialnewsapp.fragments.ArticleFragment"
+        android:name="com.rober.tutorialnewsapp.ui.fragments.ArticleFragment"
         android:label="ArticleFragment" />
     <fragment
         android:id="@+id/savedNewsFragment"
-        android:name="com.rober.tutorialnewsapp.fragments.SavedNewsFragment"
+        android:name="com.rober.tutorialnewsapp.ui.fragments.SavedNewsFragment"
         android:label="SavedNewsFragment" >
         <action
             android:id="@+id/action_savedNewsFragment_to_articleFragment"
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchNewsFragment"
-        android:name="com.rober.tutorialnewsapp.fragments.SearchNewsFragment"
+        android:name="com.rober.tutorialnewsapp.ui.fragments.SearchNewsFragment"
         android:label="SearchNewsFragment" >
         <action
             android:id="@+id/action_searchNewsFragment_to_articleFragment"

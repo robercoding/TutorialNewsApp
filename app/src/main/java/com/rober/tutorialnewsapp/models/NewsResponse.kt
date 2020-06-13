@@ -1,4 +1,6 @@
-package com.rober.tutorialnewsapp
+package com.rober.tutorialnewsapp.models
+
+import com.rober.tutorialnewsapp.models.Article
 
 data class NewsResponse(
     val articles: List<Article>,

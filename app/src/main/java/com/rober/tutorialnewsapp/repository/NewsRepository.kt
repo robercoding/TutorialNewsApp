@@ -1,4 +1,8 @@
 package com.rober.tutorialnewsapp.repository
 
-class NewsRepository {
+import com.rober.tutorialnewsapp.db.ArticleDatabase
+
+class NewsRepository(
+    val db : ArticleDatabase
+) {
 }
