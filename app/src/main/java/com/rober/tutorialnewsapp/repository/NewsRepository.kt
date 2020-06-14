@@ -9,4 +9,6 @@ class NewsRepository(
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int) =
         RetrofitInstace.api.getBreakingews(countryCode, pageNumber)
 
+    suspend fun getSearchNews(searchQuery: String, pageNumber: Int) =
+        RetrofitInstace.api.getAllNews(searchQuery, pageNumber)
 }
