@@ -9,6 +9,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.rober.tutorialnewsapp.NewsActivity
 import com.rober.tutorialnewsapp.R
 import com.rober.tutorialnewsapp.ui.NewsViewModel
@@ -24,7 +25,10 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
 
+
         showProgressBar()
+        //Prevent crashing
+        fab.isEnabled = false
         val article = args.article
 
         /*webView.apply {
@@ -43,8 +47,15 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                fab.isEnabled = true
                 hideProgressBar()
             }
+        }
+
+        fab.setOnClickListener {
+            viewModel.saveArticle(article)
+            Log.i(TAG, "Saving article")
+            Snackbar.make(view, "Article saved succesfully", Snackbar.LENGTH_SHORT).show()
         }
     }
 

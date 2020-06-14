@@ -9,6 +9,7 @@ import com.rober.tutorialnewsapp.db.ArticleDatabase
 import com.rober.tutorialnewsapp.repository.NewsRepository
 import com.rober.tutorialnewsapp.ui.NewsViewModel
 import com.rober.tutorialnewsapp.ui.NewsViewModelProviderFactory
+import com.rober.tutorialnewsapp.ui.fragments.ArticleFragment
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
