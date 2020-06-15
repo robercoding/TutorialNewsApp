@@ -1,6 +1,7 @@
 package com.rober.tutorialnewsapp.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
@@ -10,9 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.rober.tutorialnewsapp.NewsActivity
 import com.rober.tutorialnewsapp.R
 import com.rober.tutorialnewsapp.adapters.NewsAdapter
+import com.rober.tutorialnewsapp.models.NewsResponse
 import com.rober.tutorialnewsapp.ui.NewsViewModel
 import com.rober.tutorialnewsapp.util.Constants
 import com.rober.tutorialnewsapp.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
@@ -71,7 +74,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                     }
                 }
                 is Resource.Error -> {
-                    showProgressBar()
+                    showProgressBar(response)
+                    Snackbar.make(view, "There was an error and couldn't load more news!", Snackbar.LENGTH_SHORT).show()
                     response.message?.let {message->
                         Log.e(TAG, "An error ocurred: $message")
                     }
@@ -87,7 +91,14 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         paginationProgressBar.visibility = View.INVISIBLE
         isLoading = false
     }
-    private fun showProgressBar(){
+    private fun showProgressBar(response: Resource<NewsResponse>? = null){
+        when(response) {
+            is Resource.Error -> {
+                Handler().postDelayed({
+                    hideProgressBar()
+                }, 5000)
+            }
+        }
         paginationProgressBar.visibility = View.VISIBLE
         isLoading = true
     }
