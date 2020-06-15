@@ -66,8 +66,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         ItemTouchHelper(itemTouchCallback).apply {
             attachToRecyclerView(rvSavedNews)
         }
-
-
     }
 
     private fun setupRecyclerView(){

@@ -1,5 +1,6 @@
 package com.rober.tutorialnewsapp.ui
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,11 +14,16 @@ import retrofit2.Response
 class NewsViewModel(
     val newsRepository: NewsRepository
 ) : ViewModel() {
+
+    val TAG = "NewsViewModel"
+
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
+    var breakingNewsResponse : NewsResponse? = null
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
+    var searchNewsResponse : NewsResponse? = null
 
     init{
         getBreakingNews("us")
@@ -30,6 +36,7 @@ class NewsViewModel(
     }
 
     fun getSearchNews(searchQuery: String) = viewModelScope.launch {
+
         searchNews.postValue(Resource.Loading())
         val response = newsRepository.getSearchNews(searchQuery, searchNewsPage)
         searchNews.postValue(handleSearchNewsResponse(response))
@@ -38,7 +45,20 @@ class NewsViewModel(
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let {newsResponse ->
-                return Resource.Success(newsResponse)
+                breakingNewsPage++
+                if(breakingNewsResponse == null){
+                    println("size null: $breakingNewsResponse")
+                    breakingNewsResponse = newsResponse
+                    println("size after null: $breakingNewsResponse")
+                } else {
+                    println("size before old: $breakingNewsResponse")
+                    val oldArticles = breakingNewsResponse?.articles
+                    val newArticles = newsResponse.articles
+                    oldArticles?.addAll(newArticles)
+                    println("size after old: $breakingNewsResponse")
+                }
+                println("size: $breakingNewsResponse")
+                return Resource.Success(breakingNewsResponse ?: newsResponse)
             }
         }
         return Resource.Error(response.message())
@@ -47,7 +67,15 @@ class NewsViewModel(
     private fun handleSearchNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let {newsResponse ->
-                return Resource.Success(newsResponse)
+                searchNewsPage++
+                if(searchNewsResponse == null){
+                    searchNewsResponse = newsResponse
+                }else{
+                    val oldArticles = searchNewsResponse?.articles
+                    val newArticles = newsResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(searchNewsResponse ?: newsResponse)
             }
         }
         return Resource.Error(response.message())
