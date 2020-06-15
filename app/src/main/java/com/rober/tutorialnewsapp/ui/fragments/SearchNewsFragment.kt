@@ -5,6 +5,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -74,10 +75,10 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                     }
                 }
                 is Resource.Error -> {
-                    showProgressBar(response)
-                    Snackbar.make(view, "There was an error and couldn't load more news!", Snackbar.LENGTH_SHORT).show()
+                    showProgressBar()
+                    //Snackbar.make(view, "There was an error and couldn't load more news!", Snackbar.LENGTH_SHORT).show()
                     response.message?.let {message->
-                        Log.e(TAG, "An error ocurred: $message")
+                        Toast.makeText(activity, "An error ocurred: $message", Toast.LENGTH_LONG).show()
                     }
                 }
                 is Resource.Loading -> {
@@ -92,13 +93,13 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         isLoading = false
     }
     private fun showProgressBar(response: Resource<NewsResponse>? = null){
-        when(response) {
+        /*when(response) {
             is Resource.Error -> {
                 Handler().postDelayed({
                     hideProgressBar()
                 }, 5000)
             }
-        }
+        }*/
         paginationProgressBar.visibility = View.VISIBLE
         isLoading = true
     }
